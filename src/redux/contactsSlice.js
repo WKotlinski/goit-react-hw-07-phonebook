@@ -15,14 +15,17 @@ export const contactsSlice = createSlice({
     };
     const rejected = (state, action) => {
       state.isLoading = false;
-      state.error = actions.payload;
+      state.error = action.payload;
     };
     builder
       .addCase(getContacts.pending, pending)
       .addCase(getContacts.rejected, rejected)
       .addCase(getContacts.fulfilled, (state, actions) => {
         state.isLoading = false;
-        state.contacts = actions.payload;
+        state.contacts = actions.payload.map((con) => ({
+          name: con.name,
+          number: con.phone,
+        }));
       })
       .addCase(addContacts.pending, pending)
       .addCase(addContacts.rejected, rejected)

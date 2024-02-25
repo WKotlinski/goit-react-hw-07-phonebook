@@ -11,6 +11,7 @@ import {
   deleteContacts,
   getContacts,
 } from "../../redux/operaction";
+import Contact from "../list/list";
 
 const ContactsApp = () => {
   const dispatch = useDispatch();
@@ -57,17 +58,16 @@ const ContactsApp = () => {
     );
   };
   const filteredContacts = getFilteredContacts();
-
+  console.log(contacts);
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm onSubmit={addContact} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleChangeFilter} />
-      <ContactList
-        contacts={filteredContacts}
-        onDeleteContact={deleteContact}
-      />
+      {contacts.map((con) => (
+        <Contact key={con.id} contact={con} handleClick={deleteContact} />
+      ))}
     </div>
   );
 };
