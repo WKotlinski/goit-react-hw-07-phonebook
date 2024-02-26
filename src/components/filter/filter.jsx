@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilter } from "../../redux/selectors";
-import { setFilter } from "../../redux/filterSlice";
+import { setFilter } from "../../redux/contactsSlice";
 
 const Filter = () => {
   const filter = useSelector(selectFilter);

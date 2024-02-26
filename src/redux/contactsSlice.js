@@ -7,8 +7,13 @@ export const contactsSlice = createSlice({
     isLoading: false,
     error: null,
     contacts: [],
+    filter: "",
   },
-  reducers: {},
+  reducers: {
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     const pending = (state, action) => {
       state.isLoading = true;
@@ -23,6 +28,7 @@ export const contactsSlice = createSlice({
       .addCase(getContacts.fulfilled, (state, actions) => {
         state.isLoading = false;
         state.contacts = actions.payload.map((con) => ({
+          id: con.id,
           name: con.name,
           number: con.phone,
         }));
@@ -31,17 +37,18 @@ export const contactsSlice = createSlice({
       .addCase(addContacts.rejected, rejected)
       .addCase(addContacts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.contacts.push(action.payload);
+        const { name, number } = action.payload;
+        state.contacts = [...state.contacts, { name, number }];
       })
       .addCase(deleteContacts.pending, pending)
       .addCase(deleteContacts.rejected, rejected)
       .addCase(deleteContacts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.contacts = state.contacts.filter(
-          (con) => con.id !== action.payload
+          (con) => con.id !== action.payload.id
         );
       });
   },
 });
-
+export const { setFilter } = contactsSlice.actions;
 export const contactsReducer = contactsSlice.reducer;

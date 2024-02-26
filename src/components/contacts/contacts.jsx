@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { nanoid } from "nanoid";
+
 import Filter from "../filter/filter";
 import ContactForm from "../form/form";
 import ContactList from "../list/list";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContacts, selectFilter } from "../../redux/selectors";
-import { setFilter } from "../../redux/filterSlice";
+import { setFilter } from "../../redux/contactsSlice";
 import {
   addContacts,
   deleteContacts,
@@ -24,7 +24,6 @@ const ContactsApp = () => {
 
   const addContact = ({ name, number }) => {
     const newContact = {
-      id: nanoid(),
       name,
       number,
     };
@@ -36,6 +35,7 @@ const ContactsApp = () => {
     if (isContactExist) {
       alert(`${name} is already in contacts.`);
     } else {
+      console.log(newContact);
       dispatch(addContacts(newContact));
     }
   };
@@ -58,14 +58,14 @@ const ContactsApp = () => {
     );
   };
   const filteredContacts = getFilteredContacts();
-  console.log(contacts);
+
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm onSubmit={addContact} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={handleChangeFilter} />
-      {contacts.map((con) => (
+      {filteredContacts.map((con) => (
         <Contact key={con.id} contact={con} handleClick={deleteContact} />
       ))}
     </div>
