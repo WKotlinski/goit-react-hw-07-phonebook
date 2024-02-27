@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 import Filter from "../filter/filter";
 import ContactForm from "../form/form";
-import ContactList from "../list/list";
 import { useDispatch, useSelector } from "react-redux";
 import { selectContacts, selectFilter } from "../../redux/selectors";
 import { setFilter } from "../../redux/contactsSlice";
@@ -22,10 +21,10 @@ const ContactsApp = () => {
     dispatch(getContacts());
   }, [dispatch]);
 
-  const addContact = ({ name, number }) => {
+  const addContact = ({ name, phone }) => {
     const newContact = {
       name,
-      number,
+      phone,
     };
 
     const isContactExist = contacts.some(

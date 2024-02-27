@@ -1,9 +1,10 @@
 const Contact = ({ contact, handleClick }) => {
   return (
-    <li>
+    <li key={contact.id}>
       ID: {contact.id} <br />
       Name:{contact.name} <br />
-      Number: {contact.number}
+      Phone: {contact.number} <br />
+      Dodatkowo: {contact.createdAt} <br />
       <button onClick={() => handleClick(contact.id)}>Delete</button>
     </li>
   );
